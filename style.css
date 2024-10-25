@@ -1,0 +1,148 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 10% 1fr;
+    grid-template-areas:
+      "sidebar header"
+      "sidebar main";
+    height: 100vh;
+  }
+  
+  .sidebar {
+    grid-area: sidebar;
+    background-color: #b3d9ff;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .logo {
+    text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 1em;
+  }
+  
+  .menu div {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu img {
+    margin-right: 10px;
+  }
+  
+  .menu-divider {
+    height: 1px;
+    background-color: white;
+    margin: 15px 0;
+  }
+  
+  .header {
+    grid-area: header;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 20px;
+  }
+  
+  .search-bar {
+    background-color: #f0f0f0;
+    border-radius: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar img {
+    margin-right: 10px;
+  }
+  
+  .welcome {
+    display: flex;
+    align-items: center;
+  }
+  
+  .welcome-user small {
+    font-size: 0.8em;
+    color: gray;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  
+  .header-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .header-buttons button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+  }
+  
+  .main-content {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 20px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  .projects, .announcements, .trending {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+  }
+  
+  .project-card {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .project-card-text h3 {
+    margin-bottom: 5px;
+    color: black;
+  }
+  
+  .project-card-buttons img {
+    margin-left: 5px;
+  }
+  
+  .announcements, .trending {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .trending-item {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+  }
+  
+  .trending-item img {
+    margin-right: 10px;
+  }
+  
