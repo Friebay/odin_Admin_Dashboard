@@ -1,182 +1,401 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
 
-    <title>Admin Dashboard</title>
+        body {
+            min-height: 100vh;
+            background-color: #f0f2f5;
+        }
 
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr;
+            min-height: 100vh;
+        }
 
-    <meta name="description" content="" />
+        /* Sidebar styles remain the same */
+        .sidebar {
+            background-color: #1992d4;
+            color: white;
+            padding: 1rem;
+            grid-row: 1 / -1;
+        }
 
-    <link rel="stylesheet" type="text/css" href="style.css" />
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+        }
 
-    <link rel="icon" href="favicon.png" />
-  </head>
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
 
-  <body>
+        .menu a {
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        /* Updated Header */
+        .header {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            grid-template-rows: auto auto;
+            gap: 1rem;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 0.5rem;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background-color: #f0f2f5;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-self: end;
+        }
+
+        .profile .profile-picture {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-image: url('user_profile_picture.webp');
+        background-size: cover;
+        background-position: center;
+        }
+
+        .welcome {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            grid-column: 1;
+        }
+
+        .welcome .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-image: url('user_profile_picture.webp');
+        background-size: cover;
+        background-position: center;
+    }
+
+
+        .header-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            align-items: center;
+            grid-column: 2;
+        }
+
+        .header-buttons button {
+            background-color: #1992d4;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        /* Projects Section */
+        .projects {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .project-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .project-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 8px solid #f0b429;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            margin-bottom: auto; /* Pushes the buttons to the bottom */
+        }
+
+        .project-card-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+
+        /* Announcements & Trending */
+        .side-content {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .announcements, .trending {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .announcements-block, .trending-block {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .announcements-block-items, .trending-block-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .trending-block-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+        }
+
+        .trending-block-item .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        flex-shrink: 0; /* This prevents the image from being squeezed */
+        aspect-ratio: 1 / 1; /* Ensures perfect circle */
+    }
+
+        .trending-block-item:nth-child(1) .profile-picture {
+            background-image: url('trending_profile_pic_1.webp');
+        }
+
+        .trending-block-item:nth-child(2) .profile-picture {
+            background-image: url('trending_profile_pic_2.webp');
+        }
+
+        .trending-block-item:nth-child(3) .profile-picture {
+            background-image: url('trending_profile_pic_3.jpg');
+        }
+
+        .trending-block-item:nth-child(4) .profile-picture {
+            background-image: url('trending_profile_pic_4.jpg');
+        }
+
+        /* Transitions for smooth interactions */
+        button, .menu a, .project-card, .profile-picture {
+            transition: all 0.2s ease-in-out;
+        }
+
+        
+
+    </style>
+</head>
+<body>
     <div class="container">
-      <div class = "sidebar"> <!-- The sidebar should be on the left side of the screen, taking 10% of the screen, sidebar should be light blue and the text and SVGs should be white --->
-        <div class="logo"> <!-- this logo and text should be at the top of the sidebar, centered, a little bit bigger font size than menu -->
-          rocket.svg Dashboard
+        <div class="sidebar">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                Dashboard
+            </div>
+            <div class="menu">
+                <a href="#"><i class="fas fa-home"></i> Home</a>
+                <a href="#"><i class="fas fa-user"></i> Profile</a>
+                <a href="#"><i class="fas fa-message"></i> Messages</a>
+                <a href="#"><i class="fas fa-history"></i> History</a>
+                <a href="#"><i class="fas fa-tasks"></i> Tasks</a>
+                <a href="#"><i class="fas fa-users"></i> Communities</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                <a href="#"><i class="fas fa-question-circle"></i> Support</a>
+                <a href="#"><i class="fas fa-shield-alt"></i> Privacy</a>
+            </div>
         </div>
-        <div class="Menu"> <!--- This menu is on the left side of the sidebar, there should be a gap before settings button so seperate the buttons that go to technical pages-->
-          home.svg Home
-          profile.svg Profile
-          messages.svg Messages
-          history.svg History 
-          tasks.svg Tasks 
-          communities.svg Communities
-          settings.svg Settings 
-          support.svg Support 
-          privacy.svg Privacy 
-        </div>
-      </div>
-      <div class="header"> <!-- the header should have a white background-->
-        <div class="search-bar"> <!-- A search bar where user can input text, the search.svg should be outside of search bar, the search bar should be very light gray color, rounded eges, this div as the top left of the header div-->
-          search.svg Form search bar
-        </div>
-        <div class="welcome"> <!-- this div is at the bottom left of the header div-->
-          <div class="profile-picture"> <!-- current users profile picture, which takes the whole height of the welcome dic, is on the left side of the div-->
-            profile_picture.svg
-          </div>
-          <div class="wlecome-user">
-            Hi there,
-            Firstname Lastname (@firstname) <!-- text should be black, "hi there," in smaller font than "Firstname Lastname (@firstname)" -->
-          </div>
-        </div>
-        <div class="profile"> <!-- this div is in the top right of the header div -->
-          notifications.svg profile_picture.svg Firstname Lastname <!--  these should go in a row, all centered in the profile div-->
-        </div>
-        <div class="header-buttons"> <!-- this div is in the bottom right of the header div-->
-          New Upload Share <!-- three blue buttons with rounded corners, white text, in one row-->
-        </div>
-      </div>
-      <div class="main-content"> <!-- this div takes the rest of the space that is left from the sidebar and header, it should have gray background-->
-        <div class="projects">  <!-- projects will take the majority of the screen, this div will have project cards which will show information about users projects-->
-          <div class="project-text">
-            Your Projects <!-- simple black text and the top left of the projects div-->
-          </div>
-          <div class="project-cards"> <!-- project cards, which have the name and short description of projects, with favourite, watchlist and share buttons, the cards are rectangles with rounded corners and a small yellow strip on the left side of the card -->
 
-            <div class="project-cards-text">
-              Super cool project 1 <!-- this will be the name of the project, it should be a little bit bigger than description text-->
-              Description text Description text Description text Description text Description text <!-- shprt description of the project, a little bit grayed out text-->
+        <header class="header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
             </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg <!-- thesse buttons should be at the bottom right of the card, all going in one row-->
+            <div class="profile">
+                <i class="fas fa-bell"></i>
+                <div class="profile-picture"></div>
+                <span>Firstname Lastname</span>
             </div>
+            <div class="welcome">
+                <div class="profile-picture"></div>
+                <div>Hi there, Firstname Lastname (@firstname)</div>
+            </div>
+            <div class="header-buttons">
+                <button>New</button>
+                <button>Upload</button>
+                <button>Share</button>
+            </div>
+        </header>
 
-            <div class="project-cards-text">
-              Super cool project 2
-              Description text Description text Description text Description text Description text
-            </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg
-            </div>
-
-            <div class="project-cards-text">
-              Super cool project 3
-              Description text Description text Description text Description text Description text
-            </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg
-            </div>
-
-            <div class="project-cards-text">
-              Super cool project 4
-              Description text Description text Description text Description text Description text
-            </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg
-            </div>
-
-            <div class="project-cards-text">
-              Super cool project 5
-              Description text Description text Description text Description text Description text
-            </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg
-            </div>
-
-            <div class="project-cards-text">
-              Super cool project 6
-              Description text Description text Description text Description text Description text
-            </div>
-            <div class="project-cards-buttons">
-              favourite.svg watchlist.csv share.svg
+        <main class="main-content">
+            <div class="projects">
+                <h2>Your Projects</h2>
+                <div class="project-cards">
+                    <div class="project-card">
+                        <h3>Super cool project 1</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                    <!-- Add 5 more project cards with the same structure -->
+                    <div class="project-card">
+                        <h3>Super cool project 2</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Super cool project 3</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Super cool project 4</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Super cool project 5</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <h3>Super cool project 6</h3>
+                        <p>Description text Description text Description text Description text Description text</p>
+                        <div class="project-card-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-eye"></i>
+                            <i class="fas fa-share"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-          </div>
-        </div>
-        <div class="announcements"> <!-- announcements should be at the top right of the main content div, it should take about 15% size from the right side-->
-          <div class="announcements-title">
-            Announcements
-          </div>
-          <div class="announcements-block"> <!-- white box with rounded corners, with gray lines between the different announcements-->
+            <div class="side-content">
+                <div class="announcements">
+                    <h2>Announcements</h2>
+                    <div class="announcements-block">
+                        <div class="announcements-block-items">
+                            <h3>Site Maintenance 1</h3>
+                            <p>Announcement text Announcement text Announcement text</p>
+                        </div>
+                        <div class="announcements-block-items">
+                            <h3>Site Maintenance 1</h3>
+                            <p>Announcement text Announcement text Announcement text</p>
+                        </div>
+                        <div class="announcements-block-items">
+                            <h3>Site Maintenance 1</h3>
+                            <p>Announcement text Announcement text Announcement text</p>
+                        </div>
+                        <!-- Repeat for other announcements -->
+                    </div>
+                </div>
 
-            <div class="announcements-block-items">
-              Site Maintanance 1
-              Announcement text Announcement text Announcement text Announcement text Announcement text Announcement text 
+                <div class="trending">
+                    <h2>Trending</h2>
+                    <div class="trending-block">
+                        <div class="trending-block-item">
+                            <div class="profile-picture"></div>
+                            <div>@trending_username_1 Trending users project name</div>
+                        </div>
+                        <div class="trending-block-item">
+                            <div class="profile-picture"></div>
+                            <div>@trending_username_1 Trending users project name</div>
+                        </div>
+                        <div class="trending-block-item">
+                            <div class="profile-picture"></div>
+                            <div>@trending_username_1 Trending users project name</div>
+                        </div>
+                        <div class="trending-block-item">
+                            <div class="profile-picture"></div>
+                            <div>@trending_username_1 Trending users project name</div>
+                        </div>
+                        <!-- Repeat for other trending items -->
+                    </div>
+                </div>
             </div>
-            
-            <div class="announcements-block-items">
-              Site Maintanance 2
-              Announcement text Announcement text Announcement text Announcement text Announcement text Announcement text 
-            </div>
-            
-            <div class="announcements-block-items">
-              Site Maintanance 3
-              Announcement text Announcement text Announcement text Announcement text Announcement text Announcement text 
-            </div>
-
-          </div>
-        </div>
-        <div class="trending"> <!-- this div should be at the bottom right of the main content div-->
-          <div class="trending-title">
-            Trending
-          </div>
-          <div class="trending-block">
-            <div class="trending-block-item">
-
-              <div class="trending-block-item-profile-picture"> <!-- profile pictures take the whole height of trending-block-item, the profile picture is on the left side of the block item-->
-                trending_users_profile_picture_1.svg
-              </div>
-              <div class="trending-block-item-text">
-                @trending_username_1
-                Trending users project name
-              </div>
-              
-              <div class="trending-block-item-profile-picture">
-                trending_users_profile_picture_2.svg
-              </div>
-              <div class="trending-block-item-text">
-                @trending_username_2
-                Trending users project name
-              </div>
-
-              <div class="trending-block-item-profile-picture">
-                trending_users_profile_picture_3.svg
-              </div>
-              <div class="trending-block-item-text">
-                @trending_username_3
-                Trending users project name
-              </div>
-
-              <div class="trending-block-item-profile-picture">
-                trending_users_profile_picture_4.svg
-              </div>
-              <div class="trending-block-item-text">
-                @trending_username_4
-                Trending users project name
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        </main>
     </div>
-
-    <script src="app.js"></script>
-  </body>
+</body>
 </html>
